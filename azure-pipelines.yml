@@ -19,7 +19,7 @@ variables:
   - ${{ if eq(variables['System.TeamProject'], 'public') }}:
     - name: _InternalRuntimeDownloadArgs
       value: ''
-    
+
   # used for post-build phases, internal builds only
   - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
     - group: DotNet-AspNet-SDLValidation-Params
@@ -256,14 +256,6 @@ stages:
           inputs:
             pathtoPublish: artifacts/log
             artifactName: $(Agent.Os)_$(Agent.JobName) Test Logs
-            artifactType: Container
-            parallel: true
-        - task: PublishBuildArtifacts@1
-          displayName: Upload NPM artifacts
-          condition: and(succeeded(), eq(variables['_BuildConfig'], 'Release'))
-          inputs:
-            pathtoPublish: artifacts/npm/
-            artifactName: NpmArtifacts
             artifactType: Container
             parallel: true
 
